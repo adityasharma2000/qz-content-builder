@@ -3,3 +3,11 @@ name = "bolt"
 compatibility_flags = ["nodejs_compat"]
 compatibility_date = "2024-07-01"
 pages_build_output_dir = "./build/client"
+
+[build]
+command = "pnpm run build"
+cwd = "."
+
+[build.environment_variables]
+NODE_VERSION = "18"
+PNPM_VERSION = "8"
