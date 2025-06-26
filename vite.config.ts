@@ -1,11 +1,10 @@
-import { cloudflareDevProxyVitePlugin as remixCloudflareDevProxy, vitePlugin as remixVitePlugin } from '@remix-run/dev';
+import { vitePlugin as remixVitePlugin } from '@remix-run/dev';
 import UnoCSS from 'unocss/vite';
 import { defineConfig, type ViteDevServer } from 'vite';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import { optimizeCssModules } from 'vite-plugin-optimize-css-modules';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { vercelPreset } from '@vercel/remix/vite';
-import { vitePlugin as remix } from '@remix-run/dev';
 
 export default defineConfig((config) => {
   return {
@@ -13,19 +12,16 @@ export default defineConfig((config) => {
       target: 'esnext',
     },
     plugins: [
-      remix({
-        presets: [vercelPreset()],
-      }),
-      nodePolyfills({
-        include: ['path', 'buffer'],
-      }),
-      config.mode !== 'test' && remixCloudflareDevProxy(),
       remixVitePlugin({
+        presets: [vercelPreset()],
         future: {
           v3_fetcherPersist: true,
           v3_relativeSplatPath: true,
           v3_throwAbortReason: true,
         },
+      }),
+      nodePolyfills({
+        include: ['path', 'buffer'],
       }),
       UnoCSS(),
       tsconfigPaths(),
